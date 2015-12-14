@@ -2,17 +2,11 @@
 	"manifest_version": 2,
 	"name": "Unicesumar Extend",
 	"version": "0.1",
-
-	// Descrição da nossa extensão
 	"description": "Funções extras no aluno online, como o calculo das notas!",
-
-	// Íconea da nossa extensão
 	"icons": {
 		"48": "icon48.png",
 		"128": "icon128.png"
 	},
-
-	// Utilizaremos as "Page Actions" e registramos isso aqui
     "page_action": {
         "default_icon": { 
             "16" : "icon16.png",
@@ -21,19 +15,16 @@
         "default_title": "Unicesumar Extend"
     },
 
-    // Aqui declaramos as permirsões que precisamos
     "permissions": [ 
         "tabs",
         "declarativeContent"
     ],
 
-    // Utilizaremos uma "Event Page" (note o persistent: false)
     "background": {
         "scripts": ["background.js"],
         "persistent": false
     },
 
-    // Injetaremos esses arquivos quando "match" ocorrer
     "content_scripts": [ {
         "js": [ "inject/jquery.js", "inject/notas.js" ],
         "css": [ "inject/notas-style.css" ],
