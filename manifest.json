@@ -1,21 +1,21 @@
 {
 	"manifest_version": 2,
 	"name": "Unicesumar Extend",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Funções extras no aluno online, como o calculo das notas!",
 	"icons": {
 		"48": "icon48.png",
 		"128": "icon128.png"
 	},
     "page_action": {
-        "default_icon": { 
+        "default_icon": {
             "16" : "icon16.png",
             "32" : "icon32.png"
         },
         "default_title": "Unicesumar Extend"
     },
 
-    "permissions": [ 
+    "permissions": [
         "tabs",
         "declarativeContent"
     ],
@@ -28,6 +28,6 @@
     "content_scripts": [ {
         "js": [ "inject/jquery.js", "inject/notas.js" ],
         "css": [ "inject/notas-style.css" ],
-        "matches": [ "https://*.cesumar.br/*" ]
+        "matches": [ "https://*.cesumar.br/*notas_freq.asp" ]
     } ]
 }
