@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Unicesumar Extend",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Funções extras no aluno online, como o calculo das notas!",
 	"icons": {
 		"48": "icon48.png",
