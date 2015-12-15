@@ -134,34 +134,41 @@ $.each(entityCollection, function(index, value) {
 
        var total, notes;
 
+       // Trocar a nota do bin pela sub
+       if(bin2 !== undefined) {
+           if(subBin1 !== undefined) {
+               if(subBin1 > bin1) bin1 = subBin1;
+           }
+
+           if(subBin2 !== undefined) {
+               if(subBin2 > bin2) bin2 = subBin2;
+           }
+       }
+
+       if(bin4 !== undefined) {
+           if(subBin3 !== undefined) {
+               if(subBin3 > bin3) bin3 = subBin3;
+           }
+
+           if(subBin4 !== undefined) {
+               if(subBin4 > bin4) bin4 = subBin4;
+           }
+       }
+
+
        if(bin1 == undefined) {
           total = 0;
           notes = 0;
        } else if(bin2 == undefined) {
           total = bin1;
           notes = 1;
-       } else if(bin3 == undefined) {
-          if(subBin1 !== undefined) {
-              if(subBin1 > bin1) bin1 = subBin1;
-          }
-
-          if(subBin2 !== undefined) {
-              if(subBin2 > bin2) bin2 = subBin2;
-          }
-
+      } else if(bin3 == undefined) {
           total = bin1 + bin2;
           notes = 2;
        } else if(bin4 == undefined) {
           total = bin1 + bin2 + bin3;
           notes = 3;
        }  else {
-          if(subBin3 !== undefined) {
-              if(subBin3 > bin3) bin3 = subBin3;
-          }
-
-          if(subBin4 !== undefined) {
-              if(subBin4 > bin4) bin4 = subBin4;
-          }
           total = bin1 + bin2 + bin3 + bin4;
           notes = 4;
        }
