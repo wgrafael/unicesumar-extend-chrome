@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Unicesumar Extend",
 	"version": "0.0.4",
-	"description": "Funções extras no aluno online, como o calculo das notas!",
+	"description": "Funções extras no aluno online, como o calculo das notas e as frequencias por materia!",
 	"icons": {
 		"48": "icon48.png",
 		"128": "icon128.png"
@@ -29,5 +29,5 @@
         "js": [ "inject/jquery.js", "inject/notas.js" ],
         "css": [ "inject/notas-style.css" ],
         "matches": [ "https://*.cesumar.br/*notas_freq.asp" ]
-    } ]
+    }]
 }

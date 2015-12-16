@@ -1,5 +1,11 @@
 $(function() {
 
+    if(localStorage.getItem('__alert_updete_0.0.4') == undefined) {
+        alert("Seu Unicesumar Extend foi atualizado para nova versao, 0.0.4 com sucesso!. \n\n\n Agora a sua frenquencia é mostrado na tabela junto com as notas!\n\n\n Unicesumar Extend criado por Rafael Dantas");
+        localStorage.setItem('__alert_updete_0.0.4', true);
+    }
+
+
     // Coleção que ira receber as notas de todas as materias
     var entityCollection = [];
 
@@ -120,7 +126,8 @@ $(function() {
         }
     }
     // Adiciona o titulo de media final
-    $table.find('tr:eq(0)').append("<td class='font01n' style='font:bold 12px Arial'>TOTAL</td>");
+    $table.find('tr:eq(0)').append("<td class='font01n extend-total' style='font:bold 12px Arial'>TOTAL</td>");
+    $table.find('tr:eq(0)').append("<td class='font01n extend-frequencia' style='font:bold 12px Arial'>FREQUENCIAS</td>");
 
 
     // percorre todas as notas
@@ -188,7 +195,12 @@ $(function() {
 
 
        // Add media total da materia
-       value.element.find('td').last().text(total);
+       var $totalMedias = value.element.find('td:eq(-1)');
+       var htmlAppend = $totalMedias.text(total).clone();
+       value.element.append(htmlAppend);
+       var $frequencia = value.element.find('td:eq(-1)'); // Adicionado no append em cima, modificou os indexs dos elementos no DOM
+       obterFrequencia(value, $frequencia);
+
 
     });
 
@@ -214,14 +226,44 @@ $(function() {
     setColumnText(7, '-');
     setColumnText(8, '-');
     setColumnText(9, '-');
+    setColumnText(10, '-');
 
     lastTable.fadeIn(500);
 
 
 
-
-
-
-
     $table.append('<br><p class="credits">Unicesumar Extend - Extesão não oficial, criado por Rafael Dantas <small>(rafael@webdantas.com.br)</small> <br> <a href="https://github.com/wgrafael/unicesumar-extend">Código no github</a></p>');
+
+
+
+    function obterFrequencia(entity, element) {
+        element.text("Carregando...").css('background', 'white');
+        var cod = entity.name.split('-');
+        cod = $.trim( cod[ cod.length - 1 ] );
+
+        $.ajax({
+            url: "ti_resumo_aulas.asp",
+            method: "GET",
+            data: {
+                disc: cod
+            },
+            success: function(data) {
+                $buffer = $( data );
+
+                var $tr = $buffer.find('.disciplina tr:eq(-1) td');
+                var allow = $tr.first().text();
+                var total = $tr.last().text();
+
+                if(total == 0) total = '0';
+                if(total.length == 1) total = '0' + total;
+
+                element.text( total + '/' + allow  );
+                $buffer.remove();
+            },
+            error: function() {
+                element.text("FALHA");
+            }
+        });
+    }
+
 });
