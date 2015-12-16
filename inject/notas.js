@@ -1,126 +1,137 @@
-// Coleção que ira receber as notas de todas as materias
-var entityCollection = [];
+$(function() {
 
-// Define a media anual para cada bimestre.
-var mediaTotal = {
-    bin1: 0,
-    bin2: 0,
-    bin3: 0,
-    bin4: 0
-};
-
-// Tabela das notas (a quarta!)
-var $table = $("table:eq(3)");
-// Percorre todas as colunas, cada coluna é um bimestre
-$table.find('tr').slice(0).each(function(k, j) {
-
-    // Cria um objeto vazio para gravar as notas dessa materia
-    var entity = {};
-    $tr = $(this);
-
-    // Salva o nome da materia
-    entity.name = $tr.find("td:eq(0)").text();
-    // Salva o elemento da materia
-    entity.element = $(this);
+    if(localStorage.getItem('__alert_updete_0.0.4') == undefined) {
+        alert("Seu Unicesumar Extend foi atualizado para nova versao, 0.0.4 com sucesso!. \n\n\n Agora a sua frenquencia é mostrado na tabela junto com as notas!\n\n\n Unicesumar Extend criado por Rafael Dantas");
+        localStorage.setItem('__alert_updete_0.0.4', true);
+    }
 
 
-        // helper para obter a nota a partir da coluna (caso - trasforma em undefined).
-    var getNote = function(position) {
-        return ($tr.find('td:eq('+ position +')').text() != '-') ? parseFloat($tr.find('td:eq('+ position +')').text()) : undefined;
+    // Coleção que ira receber as notas de todas as materias
+    var entityCollection = [];
+
+    // Define a media anual para cada bimestre.
+    var mediaTotal = {
+        bin1: 0,
+        bin2: 0,
+        bin3: 0,
+        bin4: 0
     };
 
-    entity.notes = {
-        bin1: {
-            element: $tr.find('td:eq(1)'), // Elemento
-            note: getNote(1) // A nota
-        },
-        subBin1: {
-            element: $tr.find('td:eq(3)'),
-            note: getNote(3)
-        },
-        bin2: {
-            element: $tr.find('td:eq(2)'),
-            note: getNote(2)
-        },
-        subBin2: {
-            element: $tr.find('td:eq(4)'),
-            note: getNote(4)
-        },
-        bin3: {
-            element: $tr.find('td:eq(5)'),
-            note: getNote(5)
-        },
-        subBin3: {
-            element: $tr.find('td:eq(7)'),
-            note: getNote(7)
-        },
-        bin4: {
-            element: $tr.find('td:eq(6)'),
-            note: getNote(6)
-        },
-        subBin4: {
-            element: $tr.find('td:eq(8)'),
-            note: getNote(8)
+    // Tabela das notas (a quarta!)
+    var $table = $("table:eq(3)");
+    // Percorre todas as colunas, cada coluna é um bimestre
+    $table.find('tr:gt(0)').each(function(k, j) {
+
+        // Cria um objeto vazio para gravar as notas dessa materia
+        var entity = {};
+        $tr = $(this);
+
+        // Salva o nome da materia
+        entity.name = $tr.find("td:eq(0)").text();
+        // Salva o elemento da materia
+        entity.element = $(this);
+
+
+            // helper para obter a nota a partir da coluna (caso - trasforma em undefined).
+        var getNote = function(position) {
+            return ($tr.find('td:eq('+ position +')').text() != '-') ? parseFloat($tr.find('td:eq('+ position +')').text()) : undefined;
+        };
+
+        entity.notes = {
+            bin1: {
+                element: $tr.find('td:eq(1)'), // Elemento
+                note: getNote(1) // A nota
+            },
+            subBin1: {
+                element: $tr.find('td:eq(3)'),
+                note: getNote(3)
+            },
+            bin2: {
+                element: $tr.find('td:eq(2)'),
+                note: getNote(2)
+            },
+            subBin2: {
+                element: $tr.find('td:eq(4)'),
+                note: getNote(4)
+            },
+            bin3: {
+                element: $tr.find('td:eq(5)'),
+                note: getNote(5)
+            },
+            subBin3: {
+                element: $tr.find('td:eq(7)'),
+                note: getNote(7)
+            },
+            bin4: {
+                element: $tr.find('td:eq(6)'),
+                note: getNote(6)
+            },
+            subBin4: {
+                element: $tr.find('td:eq(8)'),
+                note: getNote(8)
+            }
+        };
+
+        // Adiciona essa materia na collection
+        entityCollection.push(entity);
+    });
+
+
+    // Funcao calcula e determina a media de cada materia, adicionando na coluna
+    function determineMedia(entity, total, notes) {
+        var result = total - 24.0; // Calcula o quanto falta para media
+        var divide = (notes > 0) ? notes : 0; // Define o divisor
+        var toPass = result / ( 4 - divide ); // Divide o divisor pelo que falta, para definir quantos falta passar em cada bimestre
+        var color = (toPass > 0) ? 'green' : 'red'; // Define uma cor, verde para exesso ou vermelho para falta.
+
+        if(Math.abs(toPass) > 10.0 && toPass < 0) {  // Verifica se absoluto é maior que cem e a nota é negativa
+            entity.element.css('background', '#F75D59'); // Descata a linha de vermelho
+            color = 'white';
+        } else if(toPass > 0) {  // Verifica se a nota é positiva
+            entity.element.css('background', '#59E817'); // Destaca a linha de verde
+            color = 'black';
         }
-    };
 
-    // Adiciona essa materia na collection
-    entityCollection.push(entity);
-});
+        var entity = entity.notes; // Helper :)
 
-
-// Funcao calcula e determina a media de cada materia, adicionando na coluna
-function determineMedia(entity, total, notes) {
-    var result = total - 24.0; // Calcula o quanto falta para media
-    var divide = (notes > 0) ? notes : 0; // Define o divisor
-    var toPass = result / ( 4 - divide ); // Divide o divisor pelo que falta, para definir quantos falta passar em cada bimestre
-    var color = (toPass > 0) ? 'green' : 'red'; // Define uma cor, verde para exesso ou vermelho para falta.
-
-    if(Math.abs(toPass) > 10.0 && toPass < 0) {  // Verifica se absoluto é maior que cem e a nota é negativa
-        entity.element.css('background', '#F75D59'); // Descata a linha de vermelho
-        color = 'white';
-    } else if(toPass > 0) {  // Verifica se a nota é positiva
-        entity.element.css('background', '#59E817'); // Destaca a linha de verde
-        color = 'black';
-    }
-
-    var entity = entity.notes; // Helper :)
-
-    toPass = Math.abs(toPass).toFixed(1); // Transforma o numero em absoluto e com uma casa decimal
-    var changeNote = function(bin) {
-        entity[bin].element.html(toPass).css('color', color);   // helper
-    };
+        toPass = Math.abs(toPass).toFixed(1); // Transforma o numero em absoluto e com uma casa decimal
+        var changeNote = function(bin) {
+            entity[bin].element.html(toPass).css('color', color);   // helper
+        };
 
 
 
 
-    subBin1 = entity.subBin1.note;
-    subBin2 = entity.subBin2.note;
-    if(notes > 2 && notes < 4) { // Se esta no terceiro bimestre, calcular o que precisa para sub
-        if(subBin1 !== undefined && subBin2 !== undefined) { // se ja nao definido
-            alert("Ainda não calcula o valor que você precisa para sub, em breve!");
+        subBin1 = entity.subBin1.note;
+        subBin2 = entity.subBin2.note;
+        if(notes > 2 && notes < 4) { // Se esta no terceiro bimestre, calcular o que precisa para sub
+            if(subBin1 !== undefined && subBin2 !== undefined) { // se ja nao definido
+                alert("Ainda não calcula o valor que você precisa para sub, em breve!");
+            }
+        }
+
+
+
+        subBin3 = entity.subBin3.note;
+        subBin4 = entity.subBin4.note;
+        if(notes >= 4) { // Se esta no quarto bimestre, define os valores da sub
+            if(subBin3 !== undefined && subBin4 !== undefined) {
+                alert("Ainda não calcula o valor que você precisa para sub, em breve!");
+            }
+        }
+
+
+        for(i=notes+1;i<4;i++) {
+            changeNote( "bin" + i ); // usa o helper para todos os bimestre
         }
     }
+    // Adiciona o titulo de media final
+    $table.find('tr:eq(0)').append("<td class='font01n extend-total' style='font:bold 12px Arial'>TOTAL</td>");
+    $table.find('tr:eq(0)').append("<td class='font01n extend-frequencia' style='font:bold 12px Arial'>FREQUENCIAS</td>");
 
 
-
-    subBin3 = entity.subBin3.note;
-    subBin4 = entity.subBin4.note;
-    if(notes >= 4) { // Se esta no quarto bimestre, define os valores da sub
-        if(subBin3 !== undefined && subBin4 !== undefined) {
-            alert("Ainda não calcula o valor que você precisa para sub, em breve!");
-        }
-    }
-
-
-    for(i=notes+1;i<4;i++) {
-        changeNote( "bin" + i ); // usa o helper para todos os bimestre
-    }
-}
-
-// percorre todas as notas
-$.each(entityCollection, function(index, value) {
-   if(index != 0) {
+    // percorre todas as notas
+    $.each(entityCollection, function(index, value) {
        var bin1 = value.notes.bin1.note;
        var bin2 = value.notes.bin2.note;
        var subBin1 = value.notes.subBin1.note;
@@ -181,38 +192,78 @@ $.each(entityCollection, function(index, value) {
        mediaTotal.bin4 += (bin1 !== undefined) ? bin4 : 0;
 
        determineMedia(value, total, notes);
-   }
+
+
+       // Add media total da materia
+       var $totalMedias = value.element.find('td:eq(-1)');
+       var htmlAppend = $totalMedias.text(total).clone();
+       value.element.append(htmlAppend);
+       var $frequencia = value.element.find('td:eq(-1)'); // Adicionado no append em cima, modificou os indexs dos elementos no DOM
+       obterFrequencia(value, $frequencia);
+
+
+    });
+
+    // Adiciona a coluna de media do bimistre
+    var lastTableHtml = $table.find('tr').last().clone();
+    $table.append( lastTableHtml );
+    var lastTable = $table.find('tr').last();
+    lastTable.hide();
+
+    lastTable.css('background', 'rgba(63, 135, 193, 0.41)');
+
+    var setColumnText = function(column, text) {
+        lastTable.find('td:eq('+ column +')').text(text);
+    };
+
+    setColumnText(0, "Media total das materias");
+    if(mediaTotal.bin1 !== undefined) setColumnText(1, (mediaTotal.bin1 / (entityCollection.length - 1) ).toFixed(1) );
+    if(mediaTotal.bin2 !== undefined) setColumnText(2, (mediaTotal.bin2 / (entityCollection.length - 1) ).toFixed(1) );
+    if(mediaTotal.bin3 !== undefined) setColumnText(5, (mediaTotal.bin3 / (entityCollection.length - 1) ).toFixed(1) );
+    if(mediaTotal.bin4 !== undefined) setColumnText(6, (mediaTotal.bin4 / (entityCollection.length - 1) ).toFixed(1) );
+    setColumnText(3, '-');
+    setColumnText(4, '-');
+    setColumnText(7, '-');
+    setColumnText(8, '-');
+    setColumnText(9, '-');
+    setColumnText(10, '-');
+
+    lastTable.fadeIn(500);
+
+
+
+    $table.append('<br><p class="credits">Unicesumar Extend - Extesão não oficial, criado por Rafael Dantas <small>(rafael@webdantas.com.br)</small> <br> <a href="https://github.com/wgrafael/unicesumar-extend">Código no github</a></p>');
+
+
+
+    function obterFrequencia(entity, element) {
+        element.text("Carregando...").css('background', 'white');
+        var cod = entity.name.split('-');
+        cod = $.trim( cod[ cod.length - 1 ] );
+
+        $.ajax({
+            url: "ti_resumo_aulas.asp",
+            method: "GET",
+            data: {
+                disc: cod
+            },
+            success: function(data) {
+                $buffer = $( data );
+
+                var $tr = $buffer.find('.disciplina tr:eq(-1) td');
+                var allow = $tr.first().text();
+                var total = $tr.last().text();
+
+                if(total == 0) total = '0';
+                if(total.length == 1) total = '0' + total;
+
+                element.text( total + '/' + allow  );
+                $buffer.remove();
+            },
+            error: function() {
+                element.text("FALHA");
+            }
+        });
+    }
+
 });
-
-// Adiciona a coluna de media do bimistre
-var lastTableHtml = $table.find('tr').last().clone();
-$table.append( lastTableHtml );
-var lastTable = $table.find('tr').last();
-lastTable.hide();
-
-lastTable.css('background', 'rgba(63, 135, 193, 0.41)');
-
-var setColumnText = function(column, text) {
-    lastTable.find('td:eq('+ column +')').text(text);
-};
-
-setColumnText(0, "Media total das materias");
-console.log(entityCollection);
-if(mediaTotal.bin1 !== undefined) setColumnText(1, (mediaTotal.bin1 / (entityCollection.length - 1) ).toFixed(1) );
-if(mediaTotal.bin2 !== undefined) setColumnText(2, (mediaTotal.bin2 / (entityCollection.length - 1) ).toFixed(1) );
-if(mediaTotal.bin3 !== undefined) setColumnText(5, (mediaTotal.bin3 / (entityCollection.length - 1) ).toFixed(1) );
-if(mediaTotal.bin4 !== undefined) setColumnText(6, (mediaTotal.bin4 / (entityCollection.length - 1) ).toFixed(1) );
-setColumnText(3, '-');
-setColumnText(4, '-');
-setColumnText(7, '-');
-setColumnText(8, '-');
-
-lastTable.fadeIn(500);
-
-
-
-
-
-
-
-$table.append('<br><p class="credits">Unicesumar Extend - Extesão não oficial, criado por Rafael Dantas <small>(rafael@webdantas.com.br)</small> <br> <a href="https://github.com/wgrafael/unicesumar-extend">Código no github</a></p>');
