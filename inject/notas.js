@@ -87,7 +87,7 @@ $(function() {
         if(Math.abs(toPass) > 10.0 && toPass < 0) {  // Verifica se absoluto é maior que cem e a nota é negativa
             entity.element.css('background', '#F75D59'); // Descata a linha de vermelho
             color = 'white';
-        } else if(toPass > 0) {  // Verifica se a nota é positiva
+        } else if(toPass >= 0) {  // Verifica se a nota é positiva
             entity.element.css('background', '#59E817'); // Destaca a linha de verde
             color = 'black';
         }
