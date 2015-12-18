@@ -188,8 +188,8 @@ $(function() {
        // Define os total das medias depois que ja trocou as subs pelos os bins :)
        mediaTotal.bin1 += (bin1 !== undefined) ? bin1 : 0;
        mediaTotal.bin2 += (bin2 !== undefined) ? bin2 : 0;
-       mediaTotal.bin3 += (bin1 !== undefined) ? bin3 : 0;
-       mediaTotal.bin4 += (bin1 !== undefined) ? bin4 : 0;
+       mediaTotal.bin3 += (bin3 !== undefined) ? bin3 : 0;
+       mediaTotal.bin4 += (bin4 !== undefined) ? bin4 : 0;
 
        determineMedia(value, total, notes);
 
