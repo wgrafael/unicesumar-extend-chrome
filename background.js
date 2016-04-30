@@ -8,10 +8,12 @@ chrome.runtime.onInstalled.addListener(function() {
             conditions: [
                 new chrome.declarativeContent.PageStateMatcher({
                 	// A url da página conter:
-                    pageUrl: { urlContains: 'cesumar.br' },
+                    pageUrl: { urlContains: 'unicesumar.edu.br' },
                 }) ],
 			// Nesse caso, mostramos a Page Action da extensão:
-            actions: [ new chrome.declarativeContent.ShowPageAction() ]
-        }]); 
+            actions: [ openPage() ]
+        }]);
     });
+
+
 });
