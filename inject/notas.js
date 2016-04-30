@@ -1,7 +1,9 @@
-$(function() {
 
+
+$(function() {
     if(localStorage.getItem('__welcome') == undefined) {
-        window.open(chrome.extension.getURL('welcome'), '_blank');
+        var url = chrome.extension.getURL('/welcome/index.html');
+        window.open(url);
         localStorage.setItem('__welcome', "0.0.5");
     }
 
@@ -82,7 +84,7 @@ $(function() {
         var result = total - 24.0; // Calcula o quanto falta para media
         var divide = (notes > 0) ? notes : 0; // Define o divisor
         var toPass = result / ( 4 - divide ); // Divide o divisor pelo que falta, para definir quantos falta passar em cada bimestre
-        var color = (toPass > 0) ? 'green' : 'red'; // Define uma cor, verde para exesso ou vermelho para falta.
+        var color = (toPass > 0) ? 'green' : 'red'; // Define uma cor, verde para excesso ou vermelho para falta.
 
         if(Math.abs(toPass) > 10.0 && toPass < 0) {  // Verifica se absoluto é maior que cem e a nota é negativa
             entity.element.css('background', '#F75D59'); // Descata a linha de vermelho
@@ -105,8 +107,8 @@ $(function() {
         subBin1 = entity.subBin1.note;
         subBin2 = entity.subBin2.note;
         if(notes > 2 && notes < 4) { // Se esta no terceiro bimestre, calcular o que precisa para sub
-            if(subBin1 !== undefined && subBin2 !== undefined) { // se ja nao definido
-                alert("Ainda não calcula o valor que você precisa para sub, em breve!");
+            if(subBin1 == undefined || subBin2 == undefined) { // se ja nao definido
+                // em breve
             }
         }
 
@@ -115,13 +117,13 @@ $(function() {
         subBin3 = entity.subBin3.note;
         subBin4 = entity.subBin4.note;
         if(notes >= 4) { // Se esta no quarto bimestre, define os valores da sub
-            if(subBin3 !== undefined && subBin4 !== undefined) {
-                alert("Ainda não calcula o valor que você precisa para sub, em breve!");
+            if(subBin3 == undefined || subBin4 == undefined) {
+                // em breve
             }
         }
 
 
-        for(i=notes+1;i<4;i++) {
+        for(i=notes+1;i<=4;i++) {
             changeNote( "bin" + i ); // usa o helper para todos os bimestre
         }
     }

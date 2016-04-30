@@ -29,5 +29,7 @@
         "js": [ "inject/jquery.js", "inject/notas.js" ],
         "css": [ "inject/notas-style.css" ],
         "matches": [ "https://*.unicesumar.edu.br/*notas_freq.asp" ]
-    }]
+    }],
+
+	"web_accessible_resources": ["welcome/index.html"]
 }
