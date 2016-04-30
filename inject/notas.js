@@ -1,8 +1,8 @@
 $(function() {
 
-    if(localStorage.getItem('__alert_updete_0.0.4') == undefined) {
-        alert("Seu Unicesumar Extend foi atualizado para nova versao, 0.0.4 com sucesso!. \n\n\n Agora a sua frenquencia é mostrado na tabela junto com as notas!\n\n\n Unicesumar Extend criado por Rafael Dantas");
-        localStorage.setItem('__alert_updete_0.0.4', true);
+    if(localStorage.getItem('__welcome') == undefined) {
+        window.open(chrome.extension.getURL('welcome'), '_blank');
+        localStorage.setItem('__welcome', "0.0.5");
     }
 
 

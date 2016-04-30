@@ -28,6 +28,6 @@
     "content_scripts": [ {
         "js": [ "inject/jquery.js", "inject/notas.js" ],
         "css": [ "inject/notas-style.css" ],
-        "matches": [ "https://*.cesumar.br/*notas_freq.asp" ]
+        "matches": [ "https://*.unicesumar.edu.br/*notas_freq.asp" ]
     }]
 }
