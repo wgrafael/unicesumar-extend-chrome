@@ -206,19 +206,19 @@ $(function() {
 
     });
 
-    // Adiciona a coluna de media do bimistre
+    // Adiciona a coluna de média do bimestre
     var lastTableHtml = $table.find('tr').last().clone();
     $table.append( lastTableHtml );
     var lastTable = $table.find('tr').last();
     lastTable.hide();
 
-    lastTable.css('background', 'rgba(63, 135, 193, 0.41)');
+    lastTable.css('background', 'rgba(0,110,163,1)');
 
     var setColumnText = function(column, text) {
         lastTable.find('td:eq('+ column +')').text(text);
     };
 
-    setColumnText(0, "Media total das materias");
+    setColumnText(0, "Média total das matérias");
     if(mediaTotal.bin1 !== undefined) setColumnText(1, (mediaTotal.bin1 / (entityCollection.length - 1) ).toFixed(1) );
     if(mediaTotal.bin2 !== undefined) setColumnText(2, (mediaTotal.bin2 / (entityCollection.length - 1) ).toFixed(1) );
     if(mediaTotal.bin3 !== undefined) setColumnText(5, (mediaTotal.bin3 / (entityCollection.length - 1) ).toFixed(1) );
@@ -229,6 +229,7 @@ $(function() {
     setColumnText(8, '-');
     setColumnText(9, '-');
     setColumnText(10, '-');
+    setColumnText(11, '-');
 
     lastTable.fadeIn(500);
 
