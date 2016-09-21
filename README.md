@@ -14,6 +14,12 @@ Com o visualizador de notas você consegue ver quantos falta para você passar, 
 
 
 # Colaboradores
-Para colaborar, faça um fork e **lembre de modificar na branch 'dev' depois basta fazer um *pull request*. A versão master é a estável e o pacote atual no chrome web store.
+Obrigado aos colaboradores:
+- [@GuilhermeShinti](https://github.com/GuilhermeShinti)
+- [@davidcorbetta](https://github.com/davidcorbetta)
+
+### Para colaborar
+Para colaborar, faça um fork e faça suas mudanças na branch **dev**.
+A versão master é a estável e o pacote atual no chrome web store.
 
 ## Esta extensão não é oficial!
