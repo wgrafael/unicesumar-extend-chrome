@@ -1,10 +1,10 @@
 
 
 $(function() {
-    if(localStorage.getItem('__welcome') == undefined) {
+    if(localStorage.getItem('__welcome=0.0.6') == null) {
         var url = chrome.extension.getURL('/welcome/index.html');
         window.open(url);
-        localStorage.setItem('__welcome', "0.0.5");
+        localStorage.setItem('__welcome=0.0.6', true);
     }
 
 
@@ -28,8 +28,17 @@ $(function() {
         var entity = {};
         $tr = $(this);
 
+        var currentId = $tr.attr('id');
+        var regexpCollapse = /tr(.*)/g;
+        if( regexpCollapse.test(currentId) || $tr.parents('table').length > 2 ) {
+            console.log('exited', $tr );
+            return; // cancela a leitura, quando for collapse...
+        }
+
+
+
         // Salva o nome da materia
-        entity.name = $tr.find("td:eq(0)").text();
+        entity.name = $tr.find("td:eq(1)").text();
         // Salva o elemento da materia
         entity.element = $(this);
 
@@ -41,36 +50,36 @@ $(function() {
 
         entity.notes = {
             bin1: {
-                element: $tr.find('td:eq(1)'), // Elemento
-                note: getNote(1) // A nota
+                element: $tr.find('td:eq(2)'), // Elemento
+                note: getNote(2) // A nota
             },
             subBin1: {
-                element: $tr.find('td:eq(3)'),
-                note: getNote(3)
-            },
-            bin2: {
-                element: $tr.find('td:eq(2)'),
-                note: getNote(2)
-            },
-            subBin2: {
                 element: $tr.find('td:eq(4)'),
                 note: getNote(4)
             },
-            bin3: {
+            bin2: {
+                element: $tr.find('td:eq(3)'),
+                note: getNote(3)
+            },
+            subBin2: {
                 element: $tr.find('td:eq(5)'),
                 note: getNote(5)
             },
-            subBin3: {
-                element: $tr.find('td:eq(7)'),
-                note: getNote(7)
-            },
-            bin4: {
+            bin3: {
                 element: $tr.find('td:eq(6)'),
                 note: getNote(6)
             },
-            subBin4: {
+            subBin3: {
                 element: $tr.find('td:eq(8)'),
                 note: getNote(8)
+            },
+            bin4: {
+                element: $tr.find('td:eq(7)'),
+                note: getNote(7)
+            },
+            subBin4: {
+                element: $tr.find('td:eq(9)'),
+                note: getNote(9)
             }
         };
 
@@ -197,11 +206,12 @@ $(function() {
 
 
        // Add media total da materia
-       var $totalMedias = value.element.find('td:eq(-1)');
-       var htmlAppend = $totalMedias.text(total).clone();
-       value.element.append(htmlAppend);
-       var $frequencia = value.element.find('td:eq(-1)'); // Adicionado no append em cima, modificou os indexs dos elementos no DOM
-       obterFrequencia(value, $frequencia);
+       var $lastTd = value.element.find('td:eq(-1)');
+       value.element.append($lastTd.clone().text(total.toFixed(1)));
+
+       var $cloned = $lastTd.clone();
+       obterFrequencia(value, $cloned);
+       var $frequencia = value.element.append( $cloned ) // Adicionado no append em cima, modificou os indexs dos elementos no DOM
 
 
     });
@@ -218,13 +228,13 @@ $(function() {
         lastTable.find('td:eq('+ column +')').text(text);
     };
 
-    setColumnText(0, "Média total das matérias");
-    if(mediaTotal.bin1 !== undefined) setColumnText(1, (mediaTotal.bin1 / (entityCollection.length - 1) ).toFixed(1) );
-    if(mediaTotal.bin2 !== undefined) setColumnText(2, (mediaTotal.bin2 / (entityCollection.length - 1) ).toFixed(1) );
-    if(mediaTotal.bin3 !== undefined) setColumnText(5, (mediaTotal.bin3 / (entityCollection.length - 1) ).toFixed(1) );
-    if(mediaTotal.bin4 !== undefined) setColumnText(6, (mediaTotal.bin4 / (entityCollection.length - 1) ).toFixed(1) );
-    setColumnText(3, '-');
-    setColumnText(4, '-');
+    setColumnText(0, "-");
+    setColumnText(1, "Média total das matérias");
+    if(mediaTotal.bin1 !== undefined) setColumnText(2, (mediaTotal.bin1 / (entityCollection.length - 1) ).toFixed(1) );
+    if(mediaTotal.bin2 !== undefined) setColumnText(3, (mediaTotal.bin2 / (entityCollection.length - 1) ).toFixed(1) );
+    if(mediaTotal.bin3 !== undefined) setColumnText(4, (mediaTotal.bin3 / (entityCollection.length - 1) ).toFixed(1) );
+    if(mediaTotal.bin4 !== undefined) setColumnText(5, (mediaTotal.bin4 / (entityCollection.length - 1) ).toFixed(1) );
+    setColumnText(6, '-');
     setColumnText(7, '-');
     setColumnText(8, '-');
     setColumnText(9, '-');
@@ -233,9 +243,7 @@ $(function() {
 
     lastTable.fadeIn(500);
 
-
-
-    $table.append('<br><p class="credits">Unicesumar Extend - Extesão não oficial, criado por Rafael Dantas <small>(rafael@webdantas.com.br)</small> <br> <a href="https://github.com/wgrafael/unicesumar-extend">Código no github</a></p>');
+    $('table').last().prepend('<br><p class="credits">Unicesumar Extend - Extesão não oficial, criado por Rafael Dantas <small>(rafael@webdantas.com.br)</small> <br> <a href="https://github.com/wgrafael/unicesumar-extend">Código no github</a></p>');
 
 
 
