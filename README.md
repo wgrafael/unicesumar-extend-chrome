@@ -10,7 +10,7 @@ Com o visualizador de notas você consegue ver quantos falta para você passar, 
 
 # Planos futuros
 - Calcular quantos você precisa para as subs.
-- Sugestão? [Mande-me um email, rafael@webdantas.com.br](mailto:rafael@webdantas.com.br)
+- Sugestão? [Mande-me um email, wgrafael@rafaeldantas.me](mailto:wgrafael@rafaeldantas.me)
 
 
 # Colaboradores
