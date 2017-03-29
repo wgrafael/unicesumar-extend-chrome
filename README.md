@@ -10,7 +10,7 @@ Com o visualizador de notas você consegue ver quantos falta para você passar, 
 
 # Planos futuros
 - Calcular quantos você precisa para as subs.
-- Sugestão? [Mande-me um email, wgrafael@rafaeldantas.me](mailto:wgrafael@rafaeldantas.me)
+- [Sugestão?](https://github.com/wgrafael/unicesumar-extend-chrome/issues/new)
 
 
 # Colaboradores
